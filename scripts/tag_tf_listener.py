@@ -24,24 +24,28 @@ if __name__ == '__main__':
 
     while not rospy.is_shutdown():
 
-        
-	#rospy.loginfo(tfList)
         tArray.tag = []
         idList = [0]
+
+        ### for each camera ###
         for c in cams:
 
             ### Make a list of all tag transfromations contain the current camera ###
             tfList = [s for s in listener.getFrameStrings() if c in s]
 
+            ### For each transform in that list ##
             for s in tfList:
                 t = Tag()
+                ### Look Up the transform for each tag ###
                 try:
                     (trans,rot) = listener.lookupTransform('/'+c+'/aprilTag.0', s, rospy.Time(0))
                 except (tf.LookupException, tf.ConnectivityException, tf.ExtrapolationException):
                     continue
 
+                ### Pull out ID ###
                 tagID = int(re.sub('/'+c+'/aprilTag.','',s))
 
+                ### See if tag has already been located ###
                 if not tagID in idList:
 
                     idList.append(tagID)
@@ -55,16 +59,8 @@ if __name__ == '__main__':
                     t.angle = angle
                     tArray.tag.append(t)
 
-
-                '''
-                rospy.loginfo("ID: " + re.sub('/cam0/aprilTag.','',s))
-                rospy.loginfo("X: " + str(trans[0]))
-                rospy.loginfo("Y: " + str(trans[1]))
-                rospy.loginfo("Angle: " + str(angle))
-                '''
+        ### Publish Tag Stuff ###
         tArray.size = len(tArray.tag)
         tArray.header.stamp = rospy.Time.now()
         location_pub.publish(tArray)
-
-        #rospy.loginfo(listener.getFrameStrings())
         rate.sleep()
