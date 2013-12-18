@@ -1,0 +1,2 @@
+- setup-file:
+    local-name: /projects/ros/ros_ws/hoverTracker/build/devel/setup.sh

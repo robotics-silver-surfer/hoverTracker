@@ -1,0 +1,4 @@
+int32 id
+Float x
+Float y
+Float angle

@@ -1,0 +1,19 @@
+<package>
+  <description brief="hoverTracker">
+
+     hoverTracker
+
+  </description>
+  <author>Buenfil</author>
+  <license>BSD</license>
+  <review status="unreviewed" notes=""/>
+  <url>http://ros.org/wiki/hoverTracker</url>
+  <depend package="rospy"/>
+  <depend package="roscpp"/>
+  <depend package="std_msgs"/>
+  <depend package="april_msgs"/>
+  <depend package="tf"/>
+
+</package>
+
+
